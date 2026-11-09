@@ -95,8 +95,6 @@ function render(d){
   renderDate(ev);
   $("evTime").textContent = timeDigits(ev.time);
   $("evVenue").innerHTML = `${esc(ev.venue)}<br>${esc(ev.address)}`;
-  $("evDress").textContent = ev.dressCode || "Formal";
-  $("evNotes").textContent = ev.notes || "";
   if (ev.mapUrl) $("evMap").href = ev.mapUrl; else $("evMap").hidden = true;
   $("guestHead").textContent = n === 1 ? "This invitation is for 1 guest" : `This invitation is for ${n} guests`;
   $("guestList").innerHTML = d.guests.map(g => `<li>${esc(g)}</li>`).join("");
