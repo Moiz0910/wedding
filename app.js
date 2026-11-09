@@ -93,7 +93,7 @@ function render(d){
   $("family").textContent = d.family;
   $("evName").textContent = ev.name;
   renderDate(ev);
-  $("evTime").textContent = timePhrase(ev.time);
+  $("evTime").textContent = timeDigits(ev.time);
   $("evVenue").innerHTML = `${esc(ev.venue)}<br>${esc(ev.address)}`;
   $("evDress").textContent = ev.dressCode || "Formal";
   $("evNotes").textContent = ev.notes || "";
