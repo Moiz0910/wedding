@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wedding Invitation</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600&family=Sacramento&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="toast" role="alert" hidden></div>
+
+<!-- 1. Envelope -->
+<section id="v-envelope" class="view active">
+  <div class="env" id="env">
+    <div class="env-back"></div>
+    <div class="pocket"><div class="letter"><p class="script" id="lt1">Abdul Moiz &amp; Nimra Ali</p><p>request the honour of your company</p></div></div>
+    <svg class="env-front" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="0,0 50,56 100,0 100,100 0,100" fill="#FBE3D3"/></svg>
+    <svg class="flap" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE3D3"/><stop offset="1" stop-color="#F1CDB8"/></linearGradient></defs><polygon points="0,0 100,0 50,58" fill="url(#fg)"/></svg>
+    <button class="seal" id="openBtn" aria-label="Open the invitation"><span id="monogram">M&amp;N</span></button>
+  </div>
+  <p class="hint">Tap the seal to open</p>
+</section>
+
+<!-- 2. Code entry -->
+<section id="v-code" class="view">
+  <div class="card">
+    <h1 class="script">Welcome</h1>
+    <p>We are so happy you are here. Please enter the invitation code printed on your card.</p>
+    <form id="codeForm" autocomplete="off">
+      <input id="codeInput" placeholder="XXXX-XXXX" maxlength="9" aria-label="Invitation code" required>
+      <button class="btn" type="submit" id="codeBtn">View my invitation</button>
+    </form>
+  </div>
+</section>
+
+<!-- 3. Event -->
+<section id="v-event" class="view">
+  <div class="invite">
+    <p class="bismillah" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+    <p class="caps">Dear</p>
+    <h1 class="script" id="family"></h1>
+    <p class="caps">You are warmly invited to the</p>
+    <h2 class="script" id="evName"></h2>
+    <div class="datebar" id="datebar"></div>
+    <p class="caps time" id="evTime"></p>
+    <dl class="details">
+      <div><dt>Venue</dt><dd id="evVenue"></dd></div>
+      <div><dt>Dress code</dt><dd id="evDress"></dd></div>
+    </dl>
+    <p id="evNotes" class="note"></p>
+    <a class="btn btn-outline" id="evMap" target="_blank" rel="noopener">Open in Google Maps</a>
+    <h3 id="guestHead"></h3>
+    <ul id="guestList" class="guests"></ul>
+    <p class="small">We look forward to celebrating with you.</p>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
