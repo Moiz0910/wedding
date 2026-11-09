@@ -1,7 +1,7 @@
 // ===== EDIT THIS =====
 const CONFIG = { name1: "Abdul Moiz", name2: "Nimra Ali", monogram: "M&N" };
 // =====================
-const $ = id => document.getElementById(id);
+const $ = id => document.getElementById(id) || (console.warn("Missing element #" + id + " in index.html"), document.createElement("div"));
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const norm = c => c.toUpperCase().replace(/[^A-Z0-9]/g, "");
