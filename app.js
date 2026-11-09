@@ -54,15 +54,19 @@ $("codeInput").addEventListener("input", e => {
 $("codeForm").addEventListener("submit", async e => {
   e.preventDefault();
   const btn = $("codeBtn"); btn.disabled = true; btn.textContent = "Checking...";
-  try{
-    render(await unlock($("codeInput").value));
-    show("v-event");
-  }catch(err){
+  const reset = () => { btn.disabled = false; btn.textContent = "View my invitation"; };
+  let data;
+  try { data = await unlock($("codeInput").value); }
+  catch (err) {
     console.error(err);
     toast(err.message === "notfound" ? "That invitation code was not found. Please check your card and try again."
         : err.message === "insecure" ? "This page must be opened from the https website or http://localhost, not as a file."
-        : "The invitation was found but could not be opened. The data files may be out of date. Please contact us.");
-  }finally{ btn.disabled = false; btn.textContent = "View my invitation"; }
+        : "The invitation was found but could not be opened. The data files may be out of date.");
+    return reset();
+  }
+  try { render(data); show("v-event"); }
+  catch (err) { console.error(err); toast("The page files are out of sync. Please upload index.html and app.js from the same version."); }
+  reset();
 });
 
 
@@ -74,18 +78,13 @@ function renderDate(ev){
   const d = new Date(+m[1], +m[2]-1, +m[3]);
   $("datebar").innerHTML = `<span>${MON[d.getMonth()]}</span><i></i><span class="stack"><span>${DAY[d.getDay()]}</span><span>${d.getDate()}</span></span><i></i><span>${m[1]}</span>`;
 }
-function timePhrase(t){
+function timeDigits(t){
   const m = /(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i.exec(t || "");
   if (!m) return t || "";
-  let h = +m[1], min = +m[2]; const ap = (m[3] || "").toUpperCase();
-  if (ap === "PM" && h < 12) h += 12; if (ap === "AM" && h === 12) h = 0;
-  const part = h >= 5 && h < 12 ? "in the morning" : h >= 12 && h < 17 ? "in the afternoon" : h >= 17 && h < 21 ? "in the evening" : "at night";
-  const h12 = h % 12 || 12;
-  if (min === 0) return `${NUM[h12]} o'clock ${part}`;
-  if (min === 30) return `half past ${NUM[h12]} ${part}`;
-  if (min === 15) return `quarter past ${NUM[h12]} ${part}`;
-  if (min === 45) return `quarter to ${NUM[h12 % 12 + 1]} ${part}`;
-  return `${h12}:${String(min).padStart(2, "0")} ${part}`;
+  let h = +m[1]; let ap = (m[3] || "").toUpperCase();
+  if (!ap) ap = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h}:${m[2]} ${ap}`;
 }
 
 function render(d){
@@ -95,6 +94,8 @@ function render(d){
   renderDate(ev);
   $("evTime").textContent = timeDigits(ev.time);
   $("evVenue").innerHTML = `${esc(ev.venue)}<br>${esc(ev.address)}`;
+  $("evDress").textContent = ev.dressCode || "Formal";
+  $("evNotes").textContent = ev.notes || "";
   if (ev.mapUrl) $("evMap").href = ev.mapUrl; else $("evMap").hidden = true;
   $("guestHead").textContent = n === 1 ? "This invitation is for 1 guest" : `This invitation is for ${n} guests`;
   $("guestList").innerHTML = d.guests.map(g => `<li>${esc(g)}</li>`).join("");
