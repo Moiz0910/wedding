@@ -42,7 +42,7 @@ for r in rd("Invitations"):
     e = events[r["EventID"]]
     payload = {"family": r["FamilyName"], "guests": guests.get(iid, []),
                "event": {"name": e["EventName"], "date": e["EventDate"], "dateISO": iso_date(e["EventDate"]), "time": e["EventTime"], "venue": e["Venue"],
-                         "address": e["Address"], "mapUrl": e["MapUrl"], "dressCode": e["DressCode"], "notes": e["Notes"]}}
+                         "address": e["Address"], "mapUrl": e["MapUrl"]}}
     salt, iv = os.urandom(16), os.urandom(12)
     key = hashlib.pbkdf2_hmac("sha256", code.encode(), salt, 200000, 32)
     ct = AESGCM(key).encrypt(iv, json.dumps(payload).encode(), None)
