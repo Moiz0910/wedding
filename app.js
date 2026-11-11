@@ -95,6 +95,43 @@ function timeDigits(t){
   h = h % 12 || 12;
   return `${h}:${m[2]} ${ap}`;
 }
+// ===== Add to calendar =====
+const CAL = { tzOffset: "+05:00", hours: 3 };   // Pakistan time; event length in hours
+function eventTimes(ev){
+  const m = /(\d{1,2}):(\d{2})/.exec(ev.time || ""), ap = /(AM|PM)/i.exec(ev.time || "");
+  if (!ev.dateISO || !m) return null;
+  let h = +m[1];
+  if (ap) { const p = ap[1].toUpperCase(); if (p === "PM" && h < 12) h += 12; if (p === "AM" && h === 12) h = 0; }
+  const start = new Date(`${ev.dateISO}T${String(h).padStart(2, "0")}:${m[2]}:00${CAL.tzOffset}`);
+  return isNaN(start) ? null : [start, new Date(start.getTime() + CAL.hours * 36e5)];
+}
+const utc = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+const icsEsc = s => String(s).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+const fold = l => { const o = []; while (l.length > 60) { o.push(l.slice(0, 60)); l = " " + l.slice(60); } o.push(l); return o.join("\r\n"); };
+let icsUrl;
+function setupCalendar(ev){
+  const box = $("calBtn").parentElement, t = eventTimes(ev);
+  if (!t) { box.hidden = true; return; }
+  box.hidden = false;
+  const title = `${ev.name} - ${CONFIG.name1} & ${CONFIG.name2}`;
+  const where = [ev.venue, ev.address].filter(Boolean).join(", ");
+  const note = `You are invited to the ${ev.name}.` + (ev.mapUrl ? `\nMap: ${ev.mapUrl}` : "");
+  const lines = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Wedding Invitation//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
+    `UID:${utc(t[0])}-${Math.random().toString(36).slice(2)}@wedding-invitation`,`DTSTAMP:${utc(new Date())}`,
+    `DTSTART:${utc(t[0])}`,`DTEND:${utc(t[1])}`,`SUMMARY:${icsEsc(title)}`,`LOCATION:${icsEsc(where)}`,`DESCRIPTION:${icsEsc(note)}`,
+    "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:Tomorrow: wedding event","END:VALARM",
+    "BEGIN:VALARM","TRIGGER:-PT3H","ACTION:DISPLAY","DESCRIPTION:Wedding event starts in 3 hours","END:VALARM",
+    "END:VEVENT","END:VCALENDAR"];
+  if (icsUrl) URL.revokeObjectURL(icsUrl);
+  icsUrl = URL.createObjectURL(new Blob([lines.map(fold).join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" }));
+  $("calIcs").href = icsUrl;
+  $("calGoogle").href = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(title) +
+    "&dates=" + utc(t[0]) + "/" + utc(t[1]) + "&location=" + encodeURIComponent(where) + "&details=" + encodeURIComponent(note);
+  $("calOutlook").href = "https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=" + encodeURIComponent(title) +
+    "&startdt=" + encodeURIComponent(t[0].toISOString()) + "&enddt=" + encodeURIComponent(t[1].toISOString()) +
+    "&location=" + encodeURIComponent(where) + "&body=" + encodeURIComponent(note);
+  $("calBtn").onclick = () => { const o = $("calMenu").hidden; $("calMenu").hidden = !o; $("calBtn").setAttribute("aria-expanded", o); };
+}
 function render(d){
   const ev = d.event, n = d.guests.length;
   $("family").textContent = d.family;
@@ -109,4 +146,5 @@ function render(d){
   if (ev.mapUrl) $("evMap").href = ev.mapUrl; else $("evMap").hidden = true;
   $("guestHead").textContent = n === 1 ? "This invitation is for 1 guest" : `This invitation is for ${n} guests`;
   $("guestList").innerHTML = d.guests.map(g => `<li>${esc(g)}</li>`).join("");
+  setupCalendar(ev);
 }
