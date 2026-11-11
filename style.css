@@ -1,5 +1,5 @@
 :root{--bg1:#C6BAAD;--bg2:#A99A8B;--paper:#E8DCC6;--wax:#722F37;--gold:#C8A24A;--ink:#722F37;--sage:#722F37;--btn:#722F37;
---script:"Pinyon Script",cursive;--sans:"Montserrat",system-ui,sans-serif;--accent:#722F37;--serif:"Cormorant Garamond",Georgia,serif}
+--script:"Alex Brush",cursive;--wed:"Niconne";--sans:"Montserrat",system-ui,sans-serif;--accent:#722F37;--serif:"Cormorant Garamond",Georgia,serif}
 *{box-sizing:border-box}
 body{margin:0;min-height:100svh;background:radial-gradient(circle at 50% 30%,var(--bg1),#B7A89A 50%,var(--bg2) 100%);color:var(--ink);font:400 1.2rem/1.6 var(--serif)}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -58,7 +58,9 @@ background:url(speckle.svg) center/100% 100% no-repeat,radial-gradient(ellipse a
 .invite .bismillah{font:400 clamp(1.6rem,6vw,2.1rem)/1.6 "Amiri",serif;margin:0 0 1.4rem}
 .invite .caps{font:500 .82rem var(--sans);letter-spacing:.2em;text-transform:uppercase;margin:.4rem 0}
 .invite .script{font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;margin:.2rem 0 .6rem;color:var(--accent)}
+.invite .small_script{font-size:clamp(1.2rem,5vw,1.7rem);line-height:0.5;margin:.1rem 0 .3rem;color:var(--accent)}
 .invite h1.script{font-size:clamp(2.1rem,8.5vw,2.8rem)}
+.invite .wed{font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;margin:.2rem 0 .6rem;color:var(--accent)}
 .datebar{display:flex;justify-content:center;align-items:center;gap:1rem;margin:1.2rem 0 1.1rem;font:600 clamp(1.15rem,4.6vw,1.6rem)/1.15 var(--sans);letter-spacing:.14em;text-transform:uppercase}
 .datebar i{width:2px;align-self:stretch;background:var(--accent)}
 .datebar .stack{display:flex;flex-direction:column;align-items:center}
