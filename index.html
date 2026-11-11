@@ -58,6 +58,14 @@
       <div><dt>Venue</dt><dd id="evVenue"></dd></div>
     </dl>
     <a class="btn btn-outline" id="evMap" target="_blank" rel="noopener">Open in Google Maps</a>
+    <div class="cal">
+      <button type="button" class="btn btn-outline" id="calBtn" aria-expanded="false" aria-controls="calMenu">Add to calendar</button>
+      <div class="cal-menu" id="calMenu" hidden>
+        <a id="calIcs" href="#" download="wedding-invitation.ics">Apple / Outlook (.ics)</a>
+        <a id="calGoogle" href="#" target="_blank" rel="noopener">Google Calendar</a>
+        <a id="calOutlook" href="#" target="_blank" rel="noopener">Outlook.com</a>
+      </div>
+    </div>
     <h3 id="guestHead"></h3>
     <ul id="guestList" class="guests"></ul>
     <p class="small">We look forward to seeing you.</p>
