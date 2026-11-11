@@ -74,3 +74,8 @@ background:url(speckle.svg) center/100% 100% no-repeat,radial-gradient(ellipse a
 .invite .guests li{font:500 1rem var(--sans);letter-spacing:.06em;padding:.2rem 0}
 .invite .btn-outline{color:var(--accent);border-color:var(--accent);font:500 .85rem var(--sans);letter-spacing:.12em;text-transform:uppercase}
 .invite .btn-outline:hover{background:var(--accent);color:#F3EADA}
+.cal{margin-top:.8rem}
+.cal-menu{display:flex;flex-direction:column;margin:.5rem auto 0;max-width:16rem;background:#F3EBDC;border:1px solid var(--accent)}
+.cal-menu[hidden]{display:none}
+.cal-menu a{padding:.7rem 1rem;font:500 .8rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none}
+.cal-menu a:hover{background:var(--accent);color:#F3EADA}
