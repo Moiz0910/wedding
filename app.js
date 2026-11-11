@@ -87,7 +87,14 @@ function timePhrase(t){
   if (min === 45) return `quarter to ${NUM[h12 % 12 + 1]} ${part}`;
   return `${h12}:${String(min).padStart(2, "0")} ${part}`;
 }
-
+function timeDigits(t){
+  const m = /(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i.exec(t || "");
+  if (!m) return t || "";
+  let h = +m[1]; let ap = (m[3] || "").toUpperCase();
+  if (!ap) ap = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+  return `${h}:${m[2]} ${ap}`;
+}
 function render(d){
   const ev = d.event, n = d.guests.length;
   $("family").textContent = d.family;
