@@ -60,7 +60,7 @@ background:url(speckle.svg) center/100% 100% no-repeat,radial-gradient(ellipse a
 .invite .script{font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;margin:.2rem 0 .6rem;color:var(--accent)}
 .invite .small_script{font-size:clamp(1.2rem,5vw,1.7rem);line-height:0.5;margin:.1rem 0 .3rem;color:var(--accent)}
 .invite h1.script{font-size:clamp(2.1rem,8.5vw,2.8rem)}
-.invite .wed{font-size:clamp(2.4rem,10vw,3.4rem);line-height:1;margin:.2rem 0 .6rem;color:var(--accent)}
+.invite .wed{font-family:var(--wed),cursive;font-weight:400;font-size:clamp(2.6rem,11vw,3.8rem);line-height:1;margin:.2rem 0 .6rem;color:var(--accent)}
 .datebar{display:flex;justify-content:center;align-items:center;gap:1rem;margin:1.2rem 0 1.1rem;font:600 clamp(1.15rem,4.6vw,1.6rem)/1.15 var(--sans);letter-spacing:.14em;text-transform:uppercase}
 .datebar i{width:2px;align-self:stretch;background:var(--accent)}
 .datebar .stack{display:flex;flex-direction:column;align-items:center}
