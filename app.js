@@ -97,7 +97,7 @@ function render(d){
   $("pp2").textContent = ev.pp2;  
   $("evName").textContent = ev.name;
   renderDate(ev);
-  $("evTime").textContent = timePhrase(ev.time);
+  $("evTime").textContent = timeDigits(ev.time);
   $("evVenue").innerHTML = `${esc(ev.venue)}<br>${esc(ev.address)}`;
   if (ev.mapUrl) $("evMap").href = ev.mapUrl; else $("evMap").hidden = true;
   $("guestHead").textContent = n === 1 ? "This invitation is for 1 guest" : `This invitation is for ${n} guests`;
